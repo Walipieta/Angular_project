@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HomeComponent } from './home/home.component';
+import { Router, RouterModule } from '@angular/router';
 
 
 
@@ -8,18 +9,21 @@ import { HomeComponent } from './home/home.component';
   standalone: true,
   imports: [
     HomeComponent,
+    RouterModule
     
    
   ],
   template: `
   <!-- Komponent app -->
   <main>
+    
     <header class="brand-name">
+    <a [routerLink]="['/']">
       <img class="brand-logo" src="/assets/logo.svg">
+</a>
     </header>
     <section class="content">
-      <!-- import komponentu home -->
-      <app-home></app-home>
+      <router-outlet> </router-outlet>
       </section>
   
 

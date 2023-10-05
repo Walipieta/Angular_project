@@ -1,16 +1,15 @@
-import { Component } from '@angular/core';
+import { Component , inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HousingLocationComponent } from '../housing-location/housing-location.component';
 import { Housinglocation } from '../housinglocation';
-import { ProductComponent } from '../product/product.component';
-import { Product } from '../product';
+import { HousingService } from '../housing.service';
+
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     CommonModule,
-    HousingLocationComponent,
-    ProductComponent,
+    HousingLocationComponent
   
   ],
   template: `
@@ -21,10 +20,9 @@ import { Product } from '../product';
       </form>
     </section>
     <section class="results">
-      <app-housing-location [Housinglocation]="Housinglocation"></app-housing-location>
+      <app-housing-location  *ngFor="let Housinglocation of housingLocationList" [Housinglocation]="Housinglocation"></app-housing-location>
     </section>
     <section classs="listing-products">
-      <app-product [Product]="Product"></app-product>
     </section>
   `,
   styleUrls: ['./home.component.css']
@@ -32,26 +30,20 @@ import { Product } from '../product';
 export class HomeComponent {
 
 
-    //readonly baseUrl ='https://res.cloudinary.com/dj484tw6k/f_auto,q_auto,c_pad,b_white,w_505,h_505/v159317420/8546.png';
-    Housinglocation: Housinglocation = {
-      id: 999 ,
-      name: 'Test',
-      city: 'Gdansk',
-      state: 'PL',
-      photo: 'https://res.cloudinary.com/dj484tw6k/f_auto,q_auto,c_pad,b_white,w_505,h_505/v159317420/8546.png',
-      availableUnit: 50,
-      wifi: true,
-      laundry: false,
+  housingLocationList: Housinglocation[] = [];
+  housingService: HousingService = inject(HousingService);
 
-    }
 
-    Product: Product = {
-      id: 1 , 
-      product_name: "czekolada",
-      price: 50,
-      photo: 'https://res.cloudinary.com/dj484tw6k/f_auto,q_auto,c_pad,b_white,w_505,h_505/v159317420/8546.png',
-      qty: 250,
-      available: true,
-    }
-
+  constructor(){
+    this.housingLocationList = this.housingService.
+    getAllHousingLocation();
+  }
 }
+
+
+  
+    
+
+    
+
+
